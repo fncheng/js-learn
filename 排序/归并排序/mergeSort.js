@@ -31,5 +31,5 @@ let defaultCompare = function (a, b) {
 function swap(array, a, b) {
   [array[a], array[b]] = [array[b], array[a]];
 }
-let res = mergeSort([5, 4, 3, 2, 1]);
+let res = mergeSort([16, 97, 9, 17, 1, 8]);
 console.log(res);
