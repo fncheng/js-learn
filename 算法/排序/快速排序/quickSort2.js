@@ -1,3 +1,6 @@
+/**
+ * 快速排序法
+ */
 var count = 0;
 function quickSort2(array) {
   if (array.length <= 1) {
@@ -5,9 +8,10 @@ function quickSort2(array) {
   } else {
     // 选取中心轴
     const pivotIndex = Math.floor(array.length / 2);
+    // 中心值
     const pivot = array[pivotIndex];
     console.log('pivot:', pivot);
-    // 左右两个数组
+    // 定义左右两个数组
     let left = [];
     let right = [];
     for (let i = 0; i < array.length; i++) {
@@ -24,7 +28,7 @@ function quickSort2(array) {
         console.log('right:', right);
       }
     }
-    // 递归调用,知道左右两个数组都只有一个元素
+    // 递归调用,直到左右两个数组都只有一个元素
     // 将左右数组和中心轴连结起来
     return quickSort2(left).concat([pivot], quickSort2(right));
   }

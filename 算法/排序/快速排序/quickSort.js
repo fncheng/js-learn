@@ -1,10 +1,12 @@
 /**
  * 快速排序
  * 首先调用quick递归函数，传入要排序的数组
- * @param {Array} array 要排序的数组
+ * @param {Array} originalArray 要排序的数组
  * @param {Function} compareFn 比较函数
  */
-function quickSort(array, compareFn = defaultCompare) {
+function quickSort(originalArray, compareFn = defaultCompare) {
+  // Clone original array to prevent it from modification
+  const array = [...originalArray];
   return quick(array, 0, array.length - 1, compareFn);
 }
 /**
@@ -16,7 +18,9 @@ function quickSort(array, compareFn = defaultCompare) {
  */
 function quick(array, left, right, compareFn) {
   let index;
-  if (array.length > 1) {
+  if (array.length <= 1) {
+    return array;
+  } else {
     // 分割array为左右两块,并返回中间值的下标
     index = partition(array, left, right, compareFn);
     console.log('中心轴的坐标index:', index);
@@ -32,8 +36,8 @@ function quick(array, left, right, compareFn) {
       console.log('继续分割右边');
       quick(array, index, right, compareFn);
     }
+    return array;
   }
-  return array;
 }
 function partition(array, left, right, compareFn) {
   // 确定中间枢轴的值
