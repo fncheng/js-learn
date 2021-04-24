@@ -1,6 +1,6 @@
 interface IPerson {
-  readonly name: string;
-  age: number;
+  readonly name?: string;
+  age?: number;
   sex?: string;
   run(): void;
 }
@@ -11,3 +11,10 @@ let tom: IPerson = {
     console.log(this.name);
   },
 };
+
+class Animals {}
+class Dog extends Animals implements IPerson {
+  run() {
+    console.log('dog');
+  }
+}
