@@ -1,0 +1,28 @@
+<html>
+  <body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <img src="./src/01.jpeg" alt="图片" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      var nodes = document.getElementsByTagName('div');
+      for (let i = 0, len = nodes.length; i < len; i++) {
+        nodes[i].onclick = function () {
+          console.log(i);
+        };
+      }
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:3000',
+        headers: {
+          'Content-Type': 'text/palin',
+        },
+      }).then((res) => {
+        console.log(res);
+      });
+    </script>
+  </body>
+</html>
