@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <a class="baidu" href="https://www.baidu.com/">跳转百度</a>
+    </div>
+    <div
+      style="border: 1px solid seagreen"
+      id="bubble"
+      onclick="console.log('div')"
+    >
+      <ul style="border: 1px solid sandybrown" onclick="console.log('ul')">
+        <li
+          style="border: 1px solid salmon"
+          onclick="{console.log('li');event.stopPropagation();console.log(456)}"
+        >
+          test
+        </li>
+      </ul>
+    </div>
+    <a
+      href="https://www.baidu.com/"
+      onclick="{console.log('onclick'); return false;}"
+    >
+      123
+    </a>
+    <script>
+      let link = document.querySelector('.baidu');
+      link.addEventListener('click', (e) => {
+        console.log(123);
+        e.preventDefault(); //取消默认事件
+        // return false;
+      });
+    </script>
+  </body>
+</html>
