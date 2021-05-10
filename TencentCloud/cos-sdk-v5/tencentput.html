@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input id="fileSelect" type="file" />
+      pic upload: <input id="fileUpload" type="submit" />
+    </div>
+    <script>
+      const fileSelect = document.getElementById('fileSelect');
+      const fileUpload = document.getElementById('fileUpload');
+      let file;
+      fileSelect.addEventListener('change', (e) => {
+        file = fileSelect.files[0];
+        console.log(file);
+      });
+      fileUpload.addEventListener('click', () => {
+        uploadPic(file);
+      });
+      function uploadPic(file) {
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          'put',
+          'https://minimax-1256590847.cos.ap-shanghai.myqcloud.com/some.png'
+        );
+        xhr.setRequestHeader(
+          'Authorization',
+          'p7yRaFaFB2JB4ZaGk2VANCpZoPJhPTEyNTY1OTA4NDcmYj1taW5pbWF4Jms9QUtJRHRiM0dEcFFJOGgzREczdU9ncGhMQTJlVGs0R1BkNFhrJmU9MTY1MjA3MzIyMSZ0PTE2MjA1MzcxNjcmcj0xMjM0NTYmZj0='
+        );
+        xhr.send(file);
+      }
+    </script>
+  </body>
+</html>
