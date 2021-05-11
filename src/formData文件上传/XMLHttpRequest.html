@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="file" name="" id="fileSelect" />
+      <button type="submit" id="fileUpload">fileUpload</button>
+      <button id="get">Get</button>
+    </div>
+
+    <script>
+      const fileSelect = document.getElementById('fileSelect');
+      const fileUpload = document.getElementById('fileUpload');
+
+      fileSelect.addEventListener('change', ({ target: el }) => {
+        console.log(123);
+        console.log(el.files[0]);
+      });
+      fileUpload.addEventListener('click', (e) => {
+        e.preventDefault();
+        picUpload();
+      });
+      function picUpload() {
+        let formdata = new FormData();
+        // formdata.append('name', 'zs');
+        console.log('filelist: ', fileSelect.files);
+        formdata.append('myfile', fileSelect.files[0]);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://127.0.0.1:3000', true);
+        // xhr.setRequestHeader(
+        //   'Content-Type',
+        //   'multipart/form-data;boundary=----WebKitFormBoundaryVFmi5Doq4aeH0RQ1'
+        // );//无效
+
+        // xhr.overrideMimeType('multipart/form-data'); //有效
+
+        xhr.responseType = 'blob'; //有效
+        xhr.onload = function () {
+          console.log('上传中...');
+          console.log(xhr.responseText);
+        };
+        xhr.send(formdata);
+      }
+      get.onclick = () => {
+        let xhr = new XMLHttpRequest();
+        xhr.open('get', 'http://127.0.0.1:3000');
+        xhr.send(123);
+      };
+    </script>
+  </body>
+</html>
