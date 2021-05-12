@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .one {
+        height: 1000px;
+        width: 100px;
+        background-color: thistle;
+      }
+      .two {
+        width: 100px;
+        height: 100px;
+        background-color: wheat;
+      }
+      img {
+        display: block;
+        width: 400px;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 
+    Intersection_Observer_API
+   -->
+    <div class="one" style="height: 1000px; width: 100px"></div>
+    <div class="two"></div>
+    <img data-src="./images/1.jpeg" alt="" />
+    <img data-src="./images/2.png" alt="" />
+    <img data-src="./images/3.png" alt="" />
+    <img data-src="./images/4.png" alt="" />
+    <img data-src="./images/5.png" alt="" />
+    <img data-src="./images/6.jpeg" alt="" />
+
+    <script>
+      let imgs = document.querySelectorAll('img');
+      let callback = (e) => {
+        // console.log(e);
+        let el = e[0].target;
+        el.src = el.dataset.src;
+      };
+      let observer = new IntersectionObserver(callback);
+      observer.observe(document.querySelector('div.two'));
+      imgs.forEach((img, i) => {
+        observer.observe(img);
+      });
+    </script>
+  </body>
+</html>
