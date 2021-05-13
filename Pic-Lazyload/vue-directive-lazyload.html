@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      img {
+        display: block;
+        width: 400px;
+        height: 500px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <img v-lazyload="'./images/1.jpeg'" alt="" />
+      <img v-lazyload="'./images/2.png'" alt="" />
+      <img v-lazyload="'./images/3.png'" alt="" />
+      <img v-lazyload="'./images/4.png'" alt="" />
+      <img v-lazyload="'./images/5.png'" alt="" />
+      <img v-lazyload="'./images/6.jpeg'" alt="" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      Vue.directive('focus', {
+        inserted: function (el) {
+          console.log(el);
+        },
+      });
+      const app = new Vue({
+        el: '#app',
+        data() {
+          return {
+            msg: '1',
+          };
+        },
+        methods: {
+          handleLazyload(e) {
+            console.log('lazyload');
+            let el = e[0].target;
+            el.src = el.dataset.src;
+          },
+        },
+        directives: {
+          lazyload: {
+            inserted(el, binding, vnode) {
+              let cb = (entries, observer) => {
+                console.log(entries, observer);
+                console.log(observer === imgObserver);
+                entries.forEach((entry, index) => {
+                  // 获取element
+                  let elimg = entry.target;
+                  // 相交率，默认是相对于浏览器视窗
+                  if (entry.intersectionRatio > 0) {
+                    elimg.src = binding.value;
+                    // 当前图片加载完之后需要去掉监听
+                    observer.unobserve(elimg);
+                  }
+                });
+              };
+
+              let imgObserver = new IntersectionObserver(cb);
+              imgObserver.observe(el);
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
