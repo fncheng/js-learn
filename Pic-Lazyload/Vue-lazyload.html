@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      img {
+        display: block;
+        width: 400px;
+        height: 500px;
+        border: 1px solid sandybrown;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- template -->
+      <!-- <ul>
+        <li v-for="(imgSrc, index) in list" :key="index">
+          <img v-lazy="'../src/images/'+imgSrc" alt="" />
+        </li>
+      </ul> -->
+      <!-- raw-html -->
+      <div v-lazy-container="{selector:'img'}">
+        <img data-src="../src/images/1.jpeg" alt="" />
+        <img data-src="../src/images/2.png" alt="" />
+        <img data-src="../src/images/3.png" alt="" />
+        <img data-src="../src/images/4.png" alt="" />
+        <img data-src="../src/images/5.png" alt="" />
+        <img data-src="../src/images/6.jpeg" alt="" />
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-lazyload/vue-lazyload.js"></script>
+    <script>
+      Vue.use(VueLazyload);
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            list: ['1.jpeg', '2.png', '3.png', '4.png', '5.png', '6.jpeg'],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
