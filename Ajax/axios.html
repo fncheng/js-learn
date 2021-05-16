@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+    <script>
+      // create axios isntance
+      const instance = axios.create({
+        baseURL: 'http:127.0.0.1:3000', // baseURL
+        timeout: 600000,
+        headers: {},
+      });
+      // axios post  http://127.0.0.1:3000/
+      instance.post('').then((res) => {
+        console.log(res);
+      });
+      axios
+        .post('http:127.0.0.1:3000')
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    </script>
+  </body>
+</html>
