@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <input type="file" name="" id="fileSelect" />
+      <button type="submit" id="fileUpload">fileUpload</button>
+      <button id="get">Get</button>
+
+      <img id="img" src="" alt="" />
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
+    <script>
+      const fileSelect = document.getElementById('fileSelect')
+      const fileUpload = document.getElementById('fileUpload')
+      const img = document.getElementById('img')
+
+      // 监听表单change事件
+      fileSelect.addEventListener('change', ({ target: el }) => {
+        console.log(el)
+        console.log('选择图片完成')
+        console.log(el.files[0])
+        PIC_TO_BASE64(el.files[0], (url) => {
+          img.src = url
+        })
+        // PIC_TO_IMAGE(el.files[0], (url) => {
+        //   img.src = url
+        // })
+      })
+      fileUpload.addEventListener('click', (e) => {
+        picUpload()
+      })
+      function picUpload() {
+        let formdata = new FormData()
+        // formdata.append('name', 'zs');
+        console.log('filelist: ', fileSelect.files)
+        // 添加formdata节点
+        formdata.append('myfile', fileSelect.files[0])
+        axios
+          .post('http://127.0.0.1:3000', formdata, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+
+      /**
+       * 将图片转换为base64格式
+       * @param {Blob} file 图片blob对象
+       */
+      function PIC_TO_DATAURL(file, callback) {
+        // 利用fileReader把文件转base64
+        let reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = (e) => {
+          // 当图片读取完成时
+          console.log('e: ', e)
+          // e.target.value: 图片的base64字符串
+          callback(reader.result)
+        }
+      }
+      // https://segmentfault.com/a/1190000023486410
+      function PIC_TO_IMAGE(file, callback) {
+        let image = new Image()
+        let URL = window.webkitURL || window.URL
+        if (URL) {
+          let url = URL.createObjectURL(file)
+          console.log('url: ', url)
+          image.onload = () => {
+            console.log('image: ', image)
+            // callback(image)
+            URL.revokeObjectURL(url)
+          }
+          // img.src = url.slice(5)
+        }
+      }
+    </script>
+  </body>
+</html>
