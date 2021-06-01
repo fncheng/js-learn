@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Static Template</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
     <style>
       * {
         margin: 0;
@@ -23,35 +20,25 @@
       <button type="submit" id="fileUpload">fileUpload</button>
       <button id="get">Get</button>
     </div>
-    <h2>With Node.js <code>"http"</code> module</h2>
-    <form
-      action="http://127.0.0.1:3000/api/upload"
-      enctype="multipart/form-data"
-      method="post"
-    >
-      <div>Text field title: <input type="text" name="title" /></div>
-      <div>
-        File: <input type="file" name="multipleFiles" multiple="multiple" />
-      </div>
-      <input type="submit" value="Upload" />
-    </form>
     <script src="https://cdn.jsdelivr.net/npm/axios@0.21.1/dist/axios.min.js"></script>
     <script>
-      const fileSelect = document.getElementById('fileSelect');
-      const fileUpload = document.getElementById('fileUpload');
+      const fileSelect = document.getElementById('fileSelect')
+      const fileUpload = document.getElementById('fileUpload')
 
+      // 监听表单change事件
       fileSelect.addEventListener('change', ({ target: el }) => {
-        console.log(123);
-        console.log(el.files[0]);
-      });
+        console.log(el)
+        console.log('选择图片完成')
+        console.log(el.files[0])
+      })
       fileUpload.addEventListener('click', (e) => {
-        picUpload();
-      });
+        picUpload()
+      })
       function picUpload() {
-        let formdata = new FormData();
+        let formdata = new FormData()
         // formdata.append('name', 'zs');
-        console.log('filelist: ', fileSelect.files);
-        formdata.append('myfile', fileSelect.files[0]);
+        console.log('filelist: ', fileSelect.files)
+        formdata.append('myfile', fileSelect.files[0])
         axios
           .post('http://127.0.0.1:3000', formdata, {
             headers: {
@@ -59,11 +46,11 @@
             },
           })
           .then((res) => {
-            console.log(res);
+            console.log(res)
           })
           .catch((err) => {
-            console.log(err);
-          });
+            console.log(err)
+          })
       }
     </script>
   </body>
