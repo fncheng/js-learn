@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <span>456</span>
+      <button @click="lodopPrint">PRINT</button>
+      <button @click="lodopPreview">PREVIEW</button>
+      <button @click="lodopPrintDesign">Design</button>
+      <span>123</span>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="http://localhost:8000/CLodopFuncs.js"></script>
+    <script src="http://localhost:18000/CLodopfuncs.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {}
+        },
+        mounted() {
+          const LODOP = getCLodop('app')
+          LODOP.PRINT_INIT('打印任务名')
+          LODOP.ADD_PRINT_TEXT(0, 0, 100, 20, '文本内容一')
+          LODOP.ADD_PRINT_TEXT(0, 200, 500, 100, '文本内容一')
+          console.log(LODOP)
+        },
+        methods: {
+          lodopPrint() {
+            LODOP.PRINT()
+          },
+          lodopPreview() {
+            LODOP.PREVIEW()
+          },
+          lodopPrintDesign() {
+            LODOP.PRINT_DESIGN()
+          },
+        },
+      })
+    </script>
+    <script></script>
+  </body>
+</html>

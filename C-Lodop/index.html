@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>11111</div>
+      <span>456</span>
+      <!-- <button onclick="lodopPrint">PRINT</button>
+      <button onclick="lodopPreview">PREVIEW</button>
+      <button onclick="lodopPrintDesign">Design</button> -->
+      <span>123</span>
+    </div>
+    <script src="http://localhost:8000/CLodopFuncs.js"></script>
+    <script src="http://localhost:18000/CLodopfuncs.js"></script>
+    <script>
+      const LODOP = getCLodop()
+      console.log(LODOP)
+      LODOP.PREVIEW()
+      function lodopPrint() {
+        LODOP.PRINT()
+      }
+      function lodopPreview() {
+        LODOP.PREVIEW()
+      }
+      function lodopPrintDesign() {
+        LODOP.PRINT_DESIGN()
+      }
+    </script>
+    <script></script>
+  </body>
+</html>
