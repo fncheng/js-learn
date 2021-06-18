@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "async-validator": "^3.5.2",
     "axios": "^0.21.1",
     "cos-nodejs-sdk-v5": "^2.9.15",
     "formidable": "^1.2.2",
