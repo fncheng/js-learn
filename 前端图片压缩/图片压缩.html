@@ -51,7 +51,7 @@
             // 上传图片
             let formdata = new FormData()
             formdata.append('file', file.file, file.file.name)
-            console.log('formdata: ', formdata);
+            console.log('formdata: ', formdata)
             // axios.post('http://127.0.0.1:3000',data,config)
             // .then(res => {
             //   console.log(res)
@@ -76,15 +76,27 @@
                 reject()
               } else {
                 console.log('上传前处理图片')
-                console.log(Compressor)
+                // console.log(file.size)
+                // console.log(Compressor)
                 // 上传前处理图片
                 // 压缩图片
+                let _this = this
                 new Compressor(file, {
-                  success(res) {
+                  success(blob) {
                     // 压缩并转成了blob
-                    // console.log('res',res)
+                    console.log('压缩后的图片', blob)
                     // 上传图片
-                    resolve(res)
+                    let size = blob.size / 1024 / 1024
+                    console.log('图片大小 %f M', size)
+                    if (size > 2) {
+                      _this.$toast({
+                        type: 'fail',
+                        message: '请上传不超过2M的图片',
+                      })
+                      return false
+                      // reject()
+                    }
+                    resolve(blob)
                   },
                   error(err) {
                     console.log(err.message)
