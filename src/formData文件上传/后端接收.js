@@ -1,6 +1,6 @@
 const http = require('http'),
   formidable = require('formidable');
-const uploadPic = require('./putObject');
+// const uploadPic = require('./putObject');
 path = require('path');
 const fs = require('fs');
 const server = http.createServer(function (req, res) {
@@ -14,7 +14,7 @@ const server = http.createServer(function (req, res) {
       // console.log('fields:', fields);
       // console.log('files:', files);
       console.log(files.myfile.path);
-      uploadPic(files.myfile.path);
+      // uploadPic(files.myfile.path);
       res.writeHead(200, {
         'content-type': 'application/json',
         'Access-Control-Allow-Origin': '*', // 需要设置为允许跨域
