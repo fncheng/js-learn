@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/vant@2.12/lib/index.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <van-uploader
+          v-model="fileList"
+          multiple
+          :after-read="afterRead"
+          :before-read="beforeReadPromise"
+        />
+      </div>
+
+      <div>
+        <img :src="imgUrl" alt="" />
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vant@2.12/lib/vant.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/compressorjs@1.0.7/dist/compressor.min.js"></script>
+    <script src="./compress.js"></script>
+    <script>
+      new Vue({
+        el: '#app',
+        data() {
+          return {
+            fileList: [],
+            imgUrl: '',
+          }
+        },
+        mounted() {
+          // console.log(Compressor);
+        },
+        methods: {
+          // 接收 beforeReadPromise resolve()过来的参数
+          afterRead(file) {
+            console.log('file: ', file) // @param file 对象包含base64以及file对象
+            console.log(this.fileList)
+            console.log('文件读取完毕')
+
+            // 上传图片
+            let formdata = new FormData()
+            formdata.append('file', file.file, file.file.name)
+            console.log('formdata: ', formdata);
+            // axios.post('http://127.0.0.1:3000',data,config)
+            // .then(res => {
+            //   console.log(res)
+            // })
+            // .catch(err => {
+            //   console.error(err);
+            // })
+            // let res = await UPLOAD_PICTURE(this, file)
+            // console.log('res: ', res)
+            // let res = this.fileToBase64(file.file)
+            // this.imgUrl = res
+            // let newFile = this.dataURLtoFile(res, 'main.png')
+            // console.log('newFile: ', newFile)
+          },
+          beforeReadPromise(file) {
+            return new Promise((resolve, reject) => {
+              if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+                this.$toast({
+                  type: 'fail',
+                  message: '请正确上传图片文件',
+                })
+                reject()
+              } else {
+                console.log('上传前处理图片')
+                console.log(Compressor)
+                // 上传前处理图片
+                // 压缩图片
+                new Compressor(file, {
+                  success(res) {
+                    // 压缩并转成了blob
+                    // console.log('res',res)
+                    // 上传图片
+                    resolve(res)
+                  },
+                  error(err) {
+                    console.log(err.message)
+                  },
+                })
+              }
+            })
+          },
+          beforeRead(file) {
+            // 限制上传文件类型
+            if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+              this.$toast({
+                type: 'fail',
+                message: '请正确上传图片文件',
+              })
+              return false
+            }
+            // // 压缩图片
+            // const img = new Image()
+            // const reader = new FileReader() // 读取文件资源
+            // reader.readAsDataURL(file)
+            // reader.onload = function (e) {
+            //   console.log('e: ', e)
+            //   img.src = e.target.result
+            //   this.imgUrl = e.target.result
+            //   // 获取元素宽高
+            //   const { width: originWidth, height: originHeight } = img
+            //   // 最大尺寸限制
+            //   const maxWidth = 1000,
+            //     maxHeihgt = 1000
+            //   // 需要压缩的目标尺寸
+            //   let targetWidth = originWidth,
+            //     targetHeight = originHeight
+            //   // 等比例计算超过最大限制时缩放后的图片尺寸
+            //   if (originWidth > maxWidth || originHeight > maxHeight) {
+            //     if (originWidth / originHeight > 1) {
+            //       //  宽图片
+            //       targetWidth = maxWidth
+            //       targetHeight = Math.round(
+            //         maxWidth * (originHeight / originWidth)
+            //       )
+            //     } else {
+            //       // 高图片
+            //       targetHeight = maxHeight
+            //       targetWidth = Math.round(
+            //         maxHeight * (originWidth / originHeight)
+            //       )
+            //     }
+            //   }
+
+            //   // 创建画布
+            //   const canvas = document.createElement('canvas')
+            //   const context = canvas.getContext('2d')
+
+            //   // 设置宽高度为等同于要压缩图片的尺寸
+            //   canvas.width = targetWidth
+            //   canvas.height = targetHeight
+            //   context.clearRect(0, 0, targetWidth, targetHeight)
+            //   //将img绘制到画布上
+            //   context.drawImage(img, 0, 0, targetWidth, targetHeight)
+            //   canvas.toBlob(function (blob) {
+            //     resolve(blob)
+            //   }, 'image/png')
+            // }
+            // const img = new Image()
+            // const reader = new FileReader() // 读取文件资源
+            // reader.readAsDataURL(file)
+            // reader.onload = function (e) {
+            //   console.log('e: ', e)
+            //   img.src = e.target.result
+            // }
+            return true
+          },
+          fileToBase64(file) {
+            let reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onload = (e) => {
+              // console.log(e.target.result)
+              return e.target.result
+            }
+          },
+          dataURLtoFile(dataurl, filename) {
+            //将base64转换为文件
+            var arr = dataurl.split(','),
+              mime = arr[0].match(/:(.*?);/)[1],
+              bstr = atob(arr[1]),
+              n = bstr.length,
+              u8arr = new Uint8Array(n)
+            while (n--) {
+              u8arr[n] = bstr.charCodeAt(n)
+            }
+            return new File([u8arr], filename, { type: mime })
+          },
+          picUpload() {
+            let formdata = new FormData()
+            // formdata.append('name', 'zs');
+            console.log('filelist: ', fileSelect.files)
+            formdata.append('myfile', fileSelect.files[0])
+            axios
+              .post('http://127.0.0.1:3000', formdata, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              })
+              .then((res) => {
+                console.log(res)
+              })
+              .catch((err) => {
+                console.log(err)
+              })
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
