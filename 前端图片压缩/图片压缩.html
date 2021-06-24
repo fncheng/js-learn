@@ -67,7 +67,7 @@
             // console.log('newFile: ', newFile)
           },
           beforeReadPromise(file) {
-            return new Promise((resolve, reject) => {
+            return new Promise(async (resolve, reject) => {
               if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
                 this.$toast({
                   type: 'fail',
@@ -80,28 +80,17 @@
                 // console.log(Compressor)
                 // 上传前处理图片
                 // 压缩图片
+                // resolve(
                 let _this = this
-                new Compressor(file, {
-                  success(blob) {
-                    // 压缩并转成了blob
-                    console.log('压缩后的图片', blob)
-                    // 上传图片
-                    let size = blob.size / 1024 / 1024
-                    console.log('图片大小 %f M', size)
-                    if (size > 2) {
-                      _this.$toast({
-                        type: 'fail',
-                        message: '请上传不超过2M的图片',
-                      })
-                      return false
-                      // reject()
-                    }
-                    resolve(blob)
-                  },
-                  error(err) {
-                    console.log(err.message)
-                  },
-                })
+                resolve(
+                  this.compressPic(file, () => {
+                    console.log('this', _this)
+                    _this.$toast({
+                      type: 'fail',
+                      message: '请上传不超过2M的图片',
+                    })
+                  })
+                )
               }
             })
           },
@@ -169,6 +158,29 @@
             //   img.src = e.target.result
             // }
             return true
+          },
+          // 压缩图片
+          compressPic(file, callback) {
+            return new Promise((resolve, reject) => {
+              new Compressor(file, {
+                success(blob) {
+                  // 压缩并转成了blob
+                  console.log('压缩后的图片', blob)
+                  // 上传图片
+                  let size = blob.size / 1024 / 1024
+                  console.log('图片大小 %f M', size)
+                  if (size > 0.5) {
+                    callback()
+                    reject('该prormise已被拒绝')
+                  } else {
+                    resolve(blob)
+                  }
+                },
+                error(err) {
+                  console.log(err.message)
+                },
+              })
+            })
           },
           fileToBase64(file) {
             let reader = new FileReader()
