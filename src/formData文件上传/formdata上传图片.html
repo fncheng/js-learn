@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Static Template</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
+    />
     <style>
       * {
         margin: 0;
@@ -38,11 +41,16 @@
         let formdata = new FormData()
         // formdata.append('name', 'zs');
         console.log('filelist: ', fileSelect.files)
-        formdata.append('myfile', fileSelect.files[0])
+        formdata.append('myfile', fileSelect.files[0], fileSelect.files[0].name)
+        formdata.append('name', 'myname')
         axios
           .post('http://127.0.0.1:3000', formdata, {
             headers: {
               'Content-Type': 'multipart/form-data',
+            },
+            params: {
+              name: 'zs',
+              age: 18,
             },
           })
           .then((res) => {

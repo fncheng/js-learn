@@ -67,7 +67,12 @@
             // console.log('newFile: ', newFile)
           },
           beforeReadPromise(file) {
+<<<<<<< HEAD
             return new Promise(async (resolve, reject) => {
+=======
+            let _this = this
+            return new Promise((resolve, reject) => {
+>>>>>>> d0b1a9d4dc0f5eb60ffb1a0bf7d8772ae9e6983d
               if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
                 this.$toast({
                   type: 'fail',
@@ -80,6 +85,7 @@
                 // console.log(Compressor)
                 // 上传前处理图片
                 // 压缩图片
+<<<<<<< HEAD
                 // resolve(
                 let _this = this
                 resolve(
@@ -91,6 +97,27 @@
                     })
                   })
                 )
+=======
+                new Compressor(file, {
+                  success(res) {
+                    // 压缩并转成了blob
+                    // console.log('res',res)
+                    // 上传图片
+                    let size = res.size / 1024 / 1024 // 单位 MB
+                    if (size > 5) {
+                      _this.$toast({
+                        type: 'fail',
+                        message: '上传图片过大',
+                      })
+                      reject()
+                    }
+                    resolve(res)
+                  },
+                  error(err) {
+                    console.log(err.message)
+                  },
+                })
+>>>>>>> d0b1a9d4dc0f5eb60ffb1a0bf7d8772ae9e6983d
               }
             })
           },
