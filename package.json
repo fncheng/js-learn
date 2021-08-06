@@ -3,7 +3,8 @@
     "axios": "^0.21.1",
     "cos-nodejs-sdk-v5": "^2.9.15",
     "formidable": "^1.2.2",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "qs": "^6.10.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.171",
