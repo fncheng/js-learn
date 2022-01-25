@@ -4,11 +4,13 @@
     "cos-nodejs-sdk-v5": "^2.9.15",
     "formidable": "^1.2.2",
     "lodash": "^4.17.21",
+    "mathjs": "^9.5.0",
     "qs": "^6.10.1"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.171",
     "benchmark": "^2.1.4",
+    "chalk": "^5.0.0",
     "mockjs": "^1.1.0"
   }
 }
