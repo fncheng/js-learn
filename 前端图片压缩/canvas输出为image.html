@@ -1,0 +1,53 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <img width="320" src="./84718876_p1.jpg" alt="" />
+    <script>
+      const canvas = document.createElement("canvas");
+      canvas.width = 300;
+      canvas.height = 227;
+      if (!canvas.getContext) {
+        console.log("不支持canvas");
+      }
+      /**
+       * 原图2560*1440
+       */
+      const toWidth = 1920;
+      const toHeight = (1920 / 2560) * 1440;
+      canvas.width = toWidth;
+      canvas.height = toHeight;
+      const ctx = canvas.getContext("2d");
+      //创建图片
+      let img = document.querySelector("img");
+      document.body.appendChild(canvas);
+      console.log("start");
+
+      // img.setAttribute("crossOrigin", "Anonymous");
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, toWidth, toHeight);
+        const dataURL = canvas.toDataURL("image/png");
+        console.log("dataURL: ", dataURL);
+
+        const img1 = new Image();
+        img1.src = dataURL;
+        img1.width = 160;
+        document.body.append(img1);
+      };
+    </script>
+  </body>
+</html>
